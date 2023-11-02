@@ -56,8 +56,8 @@ class MidimonitorApplication(Adw.Application):
             transient_for=self.props.active_window,
             application_name="midimonitor",
             application_icon="io.github.rdbende.MidiMonitor",
-            developer_name="Dévényi Benedek",
             version="0.1.0",
+            developer_name="Dévényi Benedek",
             developers=["Dévényi Benedek"],
         )
         about.present()
