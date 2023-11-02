@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="midimonitor">
+	<schema id="io.github.rdbende.MidiMonitor" path="/io/github/rdbende/MidiMonitor/">
+	</schema>
+</schemalist>

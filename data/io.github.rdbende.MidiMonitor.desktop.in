@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=midimonitor
+Exec=midimonitor
+Icon=io.github.rdbende.MidiMonitor
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

@@ -1,0 +1,6 @@
+data/io.github.rdbende.MidiMonitor.desktop.in
+data/io.github.rdbende.MidiMonitor.metainfo.xml.in
+data/io.github.rdbende.MidiMonitor.gschema.xml
+src/main.py
+src/window.py
+src/window.ui
