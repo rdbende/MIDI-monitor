@@ -16,9 +16,17 @@ template $MidimonitorWindow : Adw.ApplicationWindow {
         menu-model: primary_menu;
       }
     }
-    content:
-    Adw.StatusPage {
-      title: "Welcome!";
+    content: ScrolledWindow {
+      ListBox listbox {
+        hexpand: true;
+        valign: start;
+        margin-top: 24;
+        margin-bottom: 24;
+        margin-start: 24;
+        margin-end: 24;
+        selection-mode: none;
+        styles ["boxed-list"]
+      }
     };
   };
 }
