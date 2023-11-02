@@ -23,6 +23,17 @@
         "*.a"
     ],
     "modules" : [
+    	{
+            "name": "blueprint-compiler",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
+                    "tag": "v0.8.1"
+                }
+            ]
+        },
         {
             "name" : "midimonitor",
             "builddir" : true,
@@ -30,7 +41,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/bende/Projects"
+                    "url" : "./"
                 }
             ]
         }
