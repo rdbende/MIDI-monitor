@@ -5,11 +5,14 @@
 
 import sys
 import gi
+import mido
+import threading
+from functools import partial
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Gtk, Gio, Adw
+from gi.repository import Gtk, Gio, Adw, GLib
 from .window import MidimonitorWindow
 
 
@@ -37,6 +40,15 @@ class MidimonitorApplication(Adw.Application):
         if not win:
             win = MidimonitorWindow(application=self)
         win.present()
+
+        self.inputs = mido.get_input_names()
+        arturia_minilab_port_hardcoded = self.inputs[1]
+        callback = partial(GLib.idle_add, self.add_message)
+        self.current_port = mido.open_input(arturia_minilab_port_hardcoded, callback=callback)
+
+    def add_message(self, msg):
+        print(msg)
+        return False
 
     def on_about_action(self, widget, _):
         """Callback for the app.about action."""
