@@ -4,17 +4,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import sys
-import gi
-import mido
 import threading
 from functools import partial
+
+import gi
+import mido
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Gtk, Gio, Adw, GLib
-from .window import MidimonitorWindow
+from gi.repository import Adw, Gio, GLib, Gtk
 
+from .window import MidimonitorWindow
 
 APPLICATION_ID = "io.github.rdbende.MidiMonitor"
 
@@ -44,7 +45,9 @@ class MidimonitorApplication(Adw.Application):
         self.inputs = mido.get_input_names()
         arturia_minilab_port_hardcoded = self.inputs[1]
         callback = partial(GLib.idle_add, self.add_message)
-        self.current_port = mido.open_input(arturia_minilab_port_hardcoded, callback=callback)
+        self.current_port = mido.open_input(
+            arturia_minilab_port_hardcoded, callback=callback
+        )
 
     def add_message(self, msg):
         print(msg)

@@ -3,8 +3,7 @@
 # SPDX-FileCopyrightText: 2023  Benedek Dévényi
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from gi.repository import Adw
-from gi.repository import Gtk
+from gi.repository import Adw, Gtk
 
 
 @Gtk.Template(resource_path="/io/github/rdbende/MidiMonitor/window.ui")
