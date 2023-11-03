@@ -20,15 +20,16 @@ template $MidimonitorWindow : Adw.ApplicationWindow {
       }
     }
     content: ScrolledWindow scrolledwindow {
-      ListBox listbox {
-        hexpand: true;
-        valign: start;
-        margin-top: 24;
-        margin-bottom: 24;
+      hscrollbar-policy: never;
+      ListView list_view {
+        can-focus: false;
+        can-target: false;
         margin-start: 24;
+        margin-top: 24;
         margin-end: 24;
-        selection-mode: none;
-        styles ["boxed-list"]
+        margin-bottom: 24;
+        valign: start;
+        show-separators: true;
       }
     };
   };

@@ -20,6 +20,7 @@ configure_file(
 
 sources = [
   '__init__.py',
+  'list_item.py',
   'main.py',
   'window.py',
   'preferences.py'

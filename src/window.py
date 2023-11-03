@@ -7,7 +7,9 @@ from functools import partial
 from typing import Literal
 
 import mido
-from gi.repository import Adw, GLib, Gtk
+from gi.repository import Adw, GLib, Gtk, Gio, GObject
+
+from .list_item import ListItem
 
 
 def get_pretty_inputs(raw_names) -> list[str]:
@@ -21,11 +23,23 @@ def get_pretty_inputs(raw_names) -> list[str]:
     return pretty_names
 
 
+class Message(GObject.GObject):
+    kind = GObject.property(type=str, flags=GObject.PARAM_READWRITE)
+    text = GObject.property(type=str, flags=GObject.PARAM_READWRITE)
+
+    def __init__(self, kind, text):
+        GObject.GObject.__init__(self)
+        self.props.kind = kind
+        self.props.text = text
+
+GObject.type_register(Message)
+
+
 @Gtk.Template(resource_path="/io/github/rdbende/MidiMonitor/window.ui")
 class MidimonitorWindow(Adw.ApplicationWindow):
     __gtype_name__ = "MidimonitorWindow"
 
-    listbox = Gtk.Template.Child()
+    list_view = Gtk.Template.Child()
     scrolledwindow = Gtk.Template.Child()
     controller_chooser = Gtk.Template.Child()
 
@@ -42,9 +56,28 @@ class MidimonitorWindow(Adw.ApplicationWindow):
         self.controller_chooser.connect("notify::selected", self.select_port)
         self.controller_chooser.props.selected = 1
 
-        self.messages = Gtk.StringList()
-        self.listbox.bind_model(self.messages, self.create_action_row)
-        self.messages.connect("items-changed", self.scroll_to_bottom)
+        self.messages = Gio.ListStore()
+        self.selection_model = Gtk.NoSelection(model=self.messages)
+        self.list_view.props.model = self.selection_model
+
+        factory = Gtk.SignalListItemFactory()
+        factory.connect("setup", lambda _, item: item.set_child(ListItem()))
+        factory.connect("bind", self.display_message)
+
+        self.list_view.props.factory = factory
+
+    def display_message(self, _, item) -> None:
+        message = item.get_item()
+        box = item.get_child()
+        box.kind_label.set_label(message.kind)
+        box.rest_label.set_label(message.text)
+
+    def append_message(self, message) -> Literal[False]:
+        kind = " ".join(message.type.split("_")).title()
+        rest = str(message).split(" ", 1)[1].replace(" ", "; ").replace("=", ": ")
+        self.messages.append(Message(kind=kind, text=rest))
+        GLib.idle_add(self.scroll_to_bottom)
+        return False
 
     def select_port(self, *_) -> None:
         try:
@@ -57,15 +90,6 @@ class MidimonitorWindow(Adw.ApplicationWindow):
                 port_name, callback=self.message_callback
             )
 
-    def create_action_row(self, msg) -> Adw.ActionRow:
-        kind, rest = msg.props.string.split(" ", 1)
-        kind = " ".join(kind.split("_")).title()
-        return Adw.ActionRow(title=kind, subtitle=rest)
-
-    def append_message(self, message) -> Literal[False]:
-        self.messages.append(str(message))
-        return False
-
     def scroll_to_bottom(self, *_) -> None:
         adj = self.scrolledwindow.get_vadjustment()
-        adj.set_value(adj.get_upper() + 1000)
+        adj.set_value(adj.get_upper())
