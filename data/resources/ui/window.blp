@@ -4,12 +4,12 @@ using Adw 1;
 template $MidimonitorWindow : Adw.ApplicationWindow {
   default-width: 600;
   default-height: 750;
-  title: "MIDI Monitor";
+  title: _("MIDI Monitor");
 
   content: Adw.ToolbarView {
     [top]
     Adw.HeaderBar header_bar {
-      [start]
+      [title]
       DropDown controller_chooser {}
 
       [end]
