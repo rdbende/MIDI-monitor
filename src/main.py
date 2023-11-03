@@ -4,16 +4,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import sys
-import threading
-from functools import partial
 
 import gi
-import mido
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, Gtk
 
 from .window import MidimonitorWindow
 
@@ -41,13 +38,6 @@ class MidimonitorApplication(Adw.Application):
         if not win:
             win = MidimonitorWindow(application=self)
         win.present()
-
-        self.inputs = mido.get_input_names()
-        arturia_minilab_port_hardcoded = self.inputs[1]
-        callback = partial(GLib.idle_add, win.add_message)
-        self.current_port = mido.open_input(
-            arturia_minilab_port_hardcoded, callback=callback
-        )
 
     def on_about_action(self, widget, _):
         """Callback for the app.about action."""

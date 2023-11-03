@@ -8,6 +8,9 @@ template $MidimonitorWindow : Adw.ApplicationWindow {
   Adw.ToolbarView {
     [top]
     Adw.HeaderBar header_bar {
+      [title]
+      DropDown controller_chooser {}
+
       [end]
       MenuButton {
         primary: true;
@@ -16,7 +19,7 @@ template $MidimonitorWindow : Adw.ApplicationWindow {
         menu-model: primary_menu;
       }
     }
-    content: ScrolledWindow {
+    content: ScrolledWindow scrolledwindow {
       ListBox listbox {
         hexpand: true;
         valign: start;
