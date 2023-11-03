@@ -49,8 +49,8 @@ class MidimonitorApplication(Adw.Application):
             application_name="MIDI Monitor",
             application_icon=APPLICATION_ID,
             version=self.version,
-            developer_name="Dévényi Benedek",
-            developers=["Dévényi Benedek"],
+            developer_name="Benedek Dévényi",
+            developers=["Benedek Dévényi"],
         ).present()
 
     def create_action(self, name, callback, shortcuts=None):
