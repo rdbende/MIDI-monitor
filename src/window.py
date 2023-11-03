@@ -58,8 +58,7 @@ class MidimonitorWindow(Adw.ApplicationWindow):
             )
 
     def create_action_row(self, msg) -> Adw.ActionRow:
-        message = msg.props.string
-        kind, rest = message.split(" ", 1)
+        kind, rest = msg.props.string.split(" ", 1)
         kind = " ".join(kind.split("_")).title()
         return Adw.ActionRow(title=kind, subtitle=rest)
 

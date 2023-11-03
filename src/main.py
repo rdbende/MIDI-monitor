@@ -20,13 +20,16 @@ APPLICATION_ID = "io.github.rdbende.MidiMonitor"
 class MidimonitorApplication(Adw.Application):
     """The main application singleton class."""
 
-    def __init__(self):
+    def __init__(self, version) -> None:
         super().__init__(
             application_id=APPLICATION_ID,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
         )
+
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
         self.create_action("about", self.on_about_action)
+
+        self.version = version
 
     def do_activate(self):
         """Called when the application is activated.
@@ -39,17 +42,16 @@ class MidimonitorApplication(Adw.Application):
             win = MidimonitorWindow(application=self)
         win.present()
 
-    def on_about_action(self, widget, _):
+    def on_about_action(self, *_):
         """Callback for the app.about action."""
-        about = Adw.AboutWindow(
+        Adw.AboutWindow(
             transient_for=self.props.active_window,
-            application_name="midimonitor",
-            application_icon="io.github.rdbende.MidiMonitor",
-            version="0.1.0",
+            application_name="MIDI Monitor",
+            application_icon=APPLICATION_ID,
+            version=self.version,
             developer_name="Dévényi Benedek",
             developers=["Dévényi Benedek"],
-        )
-        about.present()
+        ).present()
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.
@@ -69,5 +71,5 @@ class MidimonitorApplication(Adw.Application):
 
 def main(version):
     """The application's entry point."""
-    app = MidimonitorApplication()
+    app = MidimonitorApplication(version)
     return app.run(sys.argv)
