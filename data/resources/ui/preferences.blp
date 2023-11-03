@@ -1,0 +1,25 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PrefsWindow : Adw.PreferencesWindow {
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
+      Adw.SwitchRow advanced_mode_switch {
+        title: _("Advanced mode");
+        subtitle: "Show sysex messages and MIDI note numbers";
+      }
+      Adw.SpinRow history_items_spin {
+        title: _("History");
+        subtitle: _("How many events to remember");
+        numeric: true;
+        adjustment: Adjustment {
+          lower: 100;
+          upper: 50000;
+          value: 1000;
+          page-increment: 1000;
+          step-increment: 100;
+        };
+      }
+    }
+  }
+}

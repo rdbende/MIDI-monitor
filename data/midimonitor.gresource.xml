@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/io/github/rdbende/MidiMonitor">
     <file preprocess="xml-stripblanks" alias="window.ui">resources/ui/window.ui</file>
+    <file preprocess="xml-stripblanks" alias="preferences.ui">resources/ui/preferences.ui</file>
     <file preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">resources/ui/shortcuts.ui</file>
   </gresource>
 </gresources>

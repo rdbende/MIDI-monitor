@@ -13,6 +13,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Adw, Gio, Gtk
 
 from .window import MidimonitorWindow
+from .preferences import PrefsWindow
 
 APPLICATION_ID = "io.github.rdbende.MidiMonitor"
 
@@ -27,7 +28,8 @@ class MidimonitorApplication(Adw.Application):
         )
 
         self.create_action("quit", lambda *_: self.quit(), ["<primary>q"])
-        self.create_action("about", self.on_about_action)
+        self.create_action("preferences", self.on_preferences_action, ["<primary>comma"])
+        self.create_action("about", self.on_about_action, ["F1"])
 
         self.version = version
 
@@ -41,6 +43,10 @@ class MidimonitorApplication(Adw.Application):
         if not win:
             win = MidimonitorWindow(application=self)
         win.present()
+
+    def on_preferences_action(self, *_):
+        """Callback for the app.preferences action."""
+        PrefsWindow().present()
 
     def on_about_action(self, *_):
         """Callback for the app.about action."""

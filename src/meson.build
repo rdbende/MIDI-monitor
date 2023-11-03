@@ -22,6 +22,7 @@ sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'preferences.py'
 ]
 
 install_data(sources, install_dir: moduledir)
